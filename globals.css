@@ -1,0 +1,695 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Remove the RainbowKit styles import from here */
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+    --radius: 0.5rem;
+    --font-bangers: "";
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 48%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  /* Add cartoon font styling */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  button,
+  .score-display,
+  .timer-display {
+    font-family: var(--font-bangers), "Comic Sans MS", "Chalkboard SE", "Comic Neue", cursive;
+    letter-spacing: 0.05em;
+  }
+}
+
+/* Add RainbowKit styles manually */
+/* These are basic styles to mimic RainbowKit's appearance */
+.rainbow-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  background-color: #3898ff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.rainbow-button:hover {
+  background-color: #1f7eeb;
+}
+
+.rainbow-account {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.dark .rainbow-account {
+  background-color: #333;
+  color: #f0f0f0;
+}
+
+/* Add these styles at the end of the file */
+
+/* Skill tree styles */
+.skill-node {
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.skill-node:hover {
+  transform: scale(1.15);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  filter: brightness(1.2);
+}
+
+.skill-node.unlocked {
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+}
+
+.skill-node.locked {
+  opacity: 0.7;
+}
+
+.skill-node.max-level {
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+}
+
+.skill-connection {
+  transition: all 0.3s ease;
+}
+
+.skill-connection.unlocked {
+  stroke-dasharray: none;
+  animation: none;
+}
+
+/* XP progress bar animation */
+@keyframes xp-pulse {
+  0%,
+  100% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.xp-progress {
+  animation: xp-pulse 2s infinite;
+}
+
+/* Ultimate ability animations */
+@keyframes ultimate-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 5px rgba(255, 215, 0, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.9);
+  }
+}
+
+.ultimate-ability {
+  animation: ultimate-glow 2s infinite;
+}
+
+/* Combo frenzy animation */
+@keyframes combo-frenzy-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.05);
+    filter: brightness(1.2);
+  }
+}
+
+.combo-frenzy-active {
+  animation: combo-frenzy-pulse 0.5s infinite;
+}
+
+/* Add these new styles for the skill tree */
+.skill-tree-container {
+  position: relative;
+  overflow: hidden;
+  touch-action: none;
+  background-image: radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 20%),
+    radial-gradient(circle at 80% 70%, rgba(16, 185, 129, 0.1) 0%, transparent 20%);
+  background-size: 100% 100%;
+  background-position: center;
+}
+
+.skill-tree-content {
+  will-change: transform;
+}
+
+.skill-tree-controls {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 10;
+  display: flex;
+  gap: 4px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 4px;
+  padding: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Mobile-friendly adjustments */
+@media (max-width: 640px) {
+  .skill-tree-container {
+    height: 400px;
+  }
+
+  .skill-details {
+    flex-direction: column;
+  }
+
+  .skill-details-actions {
+    width: 100%;
+    margin-top: 8px;
+  }
+}
+
+/* Add these animations at the end of the file */
+@keyframes xp-gained-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+}
+
+.xp-gained {
+  animation: xp-gained-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes xp-bar-fill {
+  from {
+    width: 0;
+    opacity: 0.7;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.xp-bar-fill {
+  animation: xp-bar-fill 1s ease-out forwards;
+}
+
+/* Character-specific bounce animations */
+@keyframes bounce-berry {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-15%) rotate(5deg);
+  }
+}
+
+@keyframes bounce-carlo {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  30% {
+    transform: translateY(-10%) scale(1.05);
+  }
+  60% {
+    transform: translateY(-5%) scale(0.95);
+  }
+}
+
+@keyframes bounce-scott {
+  0%,
+  100% {
+    transform: translateY(0) skewX(0);
+  }
+  25% {
+    transform: translateY(-20%) skewX(5deg);
+  }
+  75% {
+    transform: translateY(-5%) skewX(-5deg);
+  }
+}
+
+@keyframes bounce-toli {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-20%) scale(0.9, 1.1);
+  }
+}
+
+@keyframes bounce-blueberry {
+  0%,
+  100% {
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-15%) scale(1.1, 0.9) rotate(5deg);
+  }
+  75% {
+    transform: translateY(-5%) scale(0.9, 1.1) rotate(-5deg);
+  }
+}
+
+.character-bounce-berry {
+  animation: bounce-berry 0.6s infinite ease-in-out;
+}
+
+.character-bounce-carlo {
+  animation: bounce-carlo 0.8s infinite ease-in-out;
+}
+
+.character-bounce-scott {
+  animation: bounce-scott 0.4s infinite ease-in-out;
+}
+
+.character-bounce-toli {
+  animation: bounce-toli 0.7s infinite ease-in-out;
+}
+
+.character-bounce-blueberry {
+  animation: bounce-blueberry 0.5s infinite ease-in-out;
+}
+
+/* Blueberry glow effect */
+.blueberry-glow {
+  filter: drop-shadow(0 0 5px rgba(65, 105, 225, 0.7));
+}
+
+/* Screen shake animation */
+@keyframes screen-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-2px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(2px);
+  }
+}
+
+.screen-shake {
+  animation: screen-shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+/* Ambient particles */
+.ambient-particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 5;
+  box-shadow: 0 0 5px currentColor;
+}
+
+/* Combo milestone effect */
+@keyframes combo-text-effect {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  20% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  80% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+@keyframes combo-ring-effect {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  20% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+.combo-text-effect {
+  animation: combo-text-effect 1.5s forwards;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.7), 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+.combo-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 100px;
+  border: 4px solid gold;
+  border-radius: 50%;
+  animation: combo-ring-effect 1.5s forwards;
+}
+
+/* Particle shapes */
+.particle[data-shape="triangle"] {
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.particle[data-shape="dash"] {
+  width: 12px !important;
+  height: 4px !important;
+  border-radius: 2px;
+}
+
+.particle[data-shape="leaf"] {
+  clip-path: ellipse(50% 50% at 50% 50%);
+  border-radius: 50% 0 50% 50%;
+  transform: rotate(45deg);
+}
+
+.particle[data-shape="star"] {
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+/* Day/night transition */
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.star {
+  position: absolute;
+  background-color: white;
+  border-radius: 50%;
+  animation: twinkle 3s infinite ease-in-out;
+}
+
+/* Enhanced whack animation */
+@keyframes enhanced-whack {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(0.85);
+  }
+  60% {
+    transform: scale(0.9);
+  }
+  80% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.whack-animation {
+  animation: enhanced-whack 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/*
+Add these new animations for the skill tree at the end of the file
+*/
+
+@keyframes glow {
+  0%,
+  100% {
+    box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.8);
+  }
+}
+
+.skill-node-glow {
+  animation: glow 2s infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.skill-node-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes path-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.path-animation {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: path-draw 2s ease-in-out forwards;
+}
+
+.skill-node.can-unlock {
+  animation: pulse 2s infinite;
+}
+
+.skill-node.maxed {
+  animation: glow 2s infinite;
+}
+
+.skill-tree-tabs [data-state="active"] {
+  position: relative;
+  overflow: hidden;
+}
+
+.skill-tree-tabs [data-state="active"]::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, #3b82f6, #10b981);
+  animation: slide-in 0.3s ease-out forwards;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Smooth transitions for skill details */
+.skill-details-card {
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.skill-details-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* XP bar animation */
+.xp-bar {
+  position: relative;
+  overflow: hidden;
+}
+
+.xp-bar::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: translateX(-100%);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Improved tooltip animations */
+.skill-tooltip {
+  transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-origin: top center;
+}
+
+.skill-tooltip[data-state="open"] {
+  animation: tooltip-bounce 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes tooltip-bounce {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Skill tree connection animations */
+.skill-connection {
+  transition: all 0.3s ease;
+}
+
+.skill-connection.active {
+  stroke-dasharray: 5;
+  animation: dash 20s linear infinite;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 1000;
+  }
+}
+
+/* Performance optimizations for skill tree */
+.skill-tree-container {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  perspective: 1000px;
+  -webkit-perspective: 1000px;
+}
+
+.skill-tree-draggable {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  will-change: transform;
+  touch-action: none;
+}
+
+/* Optimize animations during drag */
+.is-dragging * {
+  transition: none !important;
+  animation: none !important;
+}
+
+.skill-node {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Optimize SVG rendering */
+.skill-tree-svg {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
